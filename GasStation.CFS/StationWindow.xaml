@@ -1,0 +1,34 @@
+﻿<Window x:Class="GasStation.CFS.StationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GasStation.CFS"
+        mc:Ignorable="d"
+        Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <TextBlock Text="{Binding StringFormat=Управление АЗС № {0}, Path=Id}" FontSize="25"/>
+
+            <TextBox x:Name="StationAddress" Text="{Binding Address}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1">
+            <DataGrid x:Name="FuelDg" AutoGenerateColumns="False" ColumnWidth="*" ItemsSource="{Binding Fuels, Mode=TwoWay}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Название" Binding="{Binding TypeName}"/>
+                    <DataGridTextColumn Header="Цена (p)" Binding="{Binding Price}"/>
+                    <DataGridTextColumn Header="Остаток (л)" Binding="{Binding Amount}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Button Content="Сохранить" Click="SaveChanges_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

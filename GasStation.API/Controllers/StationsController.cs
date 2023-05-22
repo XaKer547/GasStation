@@ -13,7 +13,6 @@ namespace GasStation.API.Controllers
             _stationService = service;
         }
 
-
         [HttpGet]
         [Route("stations")]
         public async Task<IActionResult> GetStationsFuelPrice([FromQuery] string fuel)
@@ -26,16 +25,25 @@ namespace GasStation.API.Controllers
             return Ok(stations);
         }
 
-
+        //почини получение
         [HttpPost]
         [Route("setStation")]
-        public async Task<IActionResult> Post([FromForm] CreateGasStationDTO model)
+        public async Task<IActionResult> CreateStation([FromBody] CreateGasStationDTO model)
         {
             await _stationService.CreateStation(model);
 
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("setStation")]
+        public async Task<IActionResult> SetStation([FromBody] CreateGasStationDTO model)
+        {
+            await _stationService.UpdateStation(model);
 
             return Ok();
         }
+
 
 
         [HttpGet]

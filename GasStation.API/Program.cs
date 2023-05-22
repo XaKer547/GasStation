@@ -11,6 +11,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
 });
 
 builder.Services.AddScoped<IStationService, StationService>();
+builder.Services.AddScoped<IFuelService, FuelService>();
 
 // Add services to the container.
 

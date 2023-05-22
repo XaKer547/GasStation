@@ -32,8 +32,7 @@ namespace GasStation.Application.Services
                 }).Where(dto => dto.Price != null).ToArrayAsync();
         }
 
-        //он сам создает id или его прям указывают?
-        public async Task<bool> CreateStation(CreateGasStationDTO model)
+        public async Task CreateStation(CreateGasStationDTO model)
         {
             var fuels = new List<Fuel>();
 
@@ -42,7 +41,7 @@ namespace GasStation.Application.Services
                 var type = await _context.FuelTypes.FirstOrDefaultAsync(s => s.Name == fuel.TypeName);
 
                 if (type is null)
-                    return false;
+                    return;
 
                 fuels.Add(new()
                 {
@@ -52,22 +51,48 @@ namespace GasStation.Application.Services
                 });
             }
 
-            _context.Stations.Add(new Domain.Models.GasStation()
+            var station = new Domain.Models.GasStation()
             {
                 Address = model.Address,
                 Fuels = fuels
-            });
+            };
 
-            try
+            _context.Stations.Add(station);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateStation(CreateGasStationDTO model)
+        {
+            var station = _context.Stations.FirstOrDefault(s => s.Id == model.Id);
+
+            if (station is null)
+                return;
+
+            var fuelList = new List<Fuel>();
+
+            foreach (var item in model.Fuels)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch
-            {
-                return false;
+                var type = await _context.FuelTypes.FirstOrDefaultAsync(s => s.Name == item.TypeName);
+
+                var fuel = await _context.Fuels.FirstOrDefaultAsync(f => f.Type == type && f.GasStation == station);
+
+                if (fuel is null)
+                    continue;
+
+                fuel.Price = item.Price;
+                fuel.Amount = item.Amount;
+
+                fuelList.Add(fuel);
             }
 
-            return true;
+            station.Address = model.Address;
+
+            _context.Stations.Update(station);
+
+            _context.Fuels.UpdateRange(fuelList);
+
+            await _context.SaveChangesAsync();
         }
     }
 }

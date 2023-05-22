@@ -11,9 +11,9 @@ namespace GasStation.Domain.Services
         /// <returns></returns>
         public Task<IEnumerable<GasStationDTO>> GetStationsFuelPriceByType(string fuelType);
 
-
-        public Task<bool> CreateStation(CreateGasStationDTO model);
-
+        public Task CreateStation(CreateGasStationDTO model);
+        
+        public Task UpdateStation(CreateGasStationDTO model);
 
         /// <summary>
         /// Возвращает информацию, хранимую в базе о данной АЗС
