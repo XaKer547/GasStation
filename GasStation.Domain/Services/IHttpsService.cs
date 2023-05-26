@@ -6,7 +6,7 @@ namespace GasStation.Domain.Services
     public interface IHttpsService
     {
         public Task<string> GetStationInfo(int id);
-        public Task SetStation(CreateGasStationDTO model);
+        public Task SetStation(EditGasStationDTO model);
         public Task CreateStation(CreateGasStationDTO model);
         public Task<IEnumerable<FuelDTO>> GetFuelInfo(int stationId);
     }

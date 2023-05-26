@@ -2,7 +2,8 @@
 
 namespace GasStation.Domain.Models.DTOs.GasStationDTO
 {
-    public class CreateGasStationDTO : AbstractGasStationDTO
+    public class EditGasStationDTO : AbstractGasStationDTO
     {
+        public int Id { get; set; }
     }
 }

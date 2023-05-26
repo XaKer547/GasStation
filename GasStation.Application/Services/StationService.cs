@@ -62,7 +62,7 @@ namespace GasStation.Application.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateStation(CreateGasStationDTO model)
+        public async Task UpdateStation(EditGasStationDTO model)
         {
             var station = _context.Stations.FirstOrDefault(s => s.Id == model.Id);
 

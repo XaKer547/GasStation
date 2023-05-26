@@ -1,0 +1,72 @@
+﻿<Window x:Class="GasStation.Camera.UndefinedSituationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Height="450" Width="950">
+
+    <Grid>
+        <StackPanel Name="CarNumberBoxPanel">
+            <Label Content="Мы не смогли распознать номер вашей машины!" FontSize="25" HorizontalAlignment="Center"/>
+            <TextBlock Text="чтобы воспользоваться системой накопительных баллов, пожалуйста введите его вручную" FontSize="25" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center"/>
+
+            <Border BorderThickness="1" BorderBrush="Black" CornerRadius="6" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid Name="Container">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <DockPanel Grid.RowSpan="2">
+                        <TextBox Style="{DynamicResource CarNumberTextBoxStyle}" x:Name="CarNumberTxb" Width="120" CharacterCasing="Upper" PreviewTextInput="CarNumberTxb_PreviewTextInput">
+                            <TextBox.Text>
+                                <Binding Path="Number" Mode="TwoWay">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Line Y1="{Binding ElementName=Container, Path=ActualHeight}" StrokeThickness="1" Stroke="Black"/>
+                    </DockPanel>
+                    <TextBox Style="{DynamicResource CarRegionTextBoxStyle}" x:Name="CarRegionTxb" Grid.Column="1" PreviewTextInput="CarRegionTxb_PreviewTextInput">
+                        <TextBox.Text>
+                            <Binding Path="RegionNumber" Mode="TwoWay">
+                                <Binding.ValidationRules>
+                                    <DataErrorValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <Label Content="{Binding Country, Mode=TwoWay}" Grid.Column="1" Grid.Row="1" FontSize="10"/>
+                </Grid>
+            </Border>
+
+            <Button Content="Принять" Click="Accept_Click"/>
+        </StackPanel>
+
+        <StackPanel Name="CarImagePanel" Visibility="Collapsed">
+            <Label Content="Выберите самое подходящее по вашему мнению фото вашей машины" FontSize="25" HorizontalAlignment="Center"/>
+
+            <ListBox ItemsSource="{Binding AvaibleImages}" SelectedItem="{Binding CorrectImage, Mode=TwoWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                            <Image Source="{Binding }" Height="200" Width="300" Stretch="UniformToFill"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <DockPanel/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+
+            <Button Content="Подтвердить" Click="Save_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

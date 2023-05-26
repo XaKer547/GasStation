@@ -25,7 +25,6 @@ namespace GasStation.API.Controllers
             return Ok(stations);
         }
 
-        //почини получение
         [HttpPost]
         [Route("setStation")]
         public async Task<IActionResult> CreateStation([FromBody] CreateGasStationDTO model)
@@ -37,7 +36,7 @@ namespace GasStation.API.Controllers
 
         [HttpPut]
         [Route("setStation")]
-        public async Task<IActionResult> SetStation([FromBody] CreateGasStationDTO model)
+        public async Task<IActionResult> SetStation([FromBody] EditGasStationDTO model)
         {
             await _stationService.UpdateStation(model);
 
@@ -45,11 +44,13 @@ namespace GasStation.API.Controllers
         }
 
 
-
         [HttpGet]
         [Route("getStationInfo")]
         public async Task<IActionResult> GetStationInfo([FromQuery] int id)
         {
+            if (id < 0 || id > 100)
+                return BadRequest("id может принимать значение от 1 до 99 ");
+
             var station = await _stationService.GetStationInfoById(id);
 
             if (station is null)

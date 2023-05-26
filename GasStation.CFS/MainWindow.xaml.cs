@@ -1,22 +1,6 @@
 ﻿using GasStation.Application.Services;
 using GasStation.Domain.Models.DTOs.GasStationDTO;
-using GasStation.Domain.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GasStation.CFS
 {
@@ -39,28 +23,33 @@ namespace GasStation.CFS
                 return;
             }
 
-            var model = new CreateGasStationDTO()
+            if (id < 0 || id > 100)
             {
-                Id = id
-            };
+                MessageBox.Show("");
+                return;
+            }
 
             var stationAddress = await service.GetStationInfo(id);
 
             if (stationAddress is null)
             {
-                model.Fuels = await service.GetFuels();
-                new StationWindow(model).Show();
+                new StationWindow(new CreateGasStationDTO()
+                {
+                    Fuels = await service.GetFuels()
+                }).ShowDialog();
 
                 Hide();
                 return;
             }
 
-            model.Address = stationAddress;
+            new StationWindow(new EditGasStationDTO
+            {
+                Id = id,
 
-            model.Fuels = await service.GetFuelInfo(id);
+                Address = stationAddress,
 
-            model.IsNew = false;
-            new StationWindow(model).Show();
+                Fuels = await service.GetFuelInfo(id),
+            }).Show();
 
             Hide();
         }

@@ -14,13 +14,14 @@
         </Grid.RowDefinitions>
 
         <StackPanel>
-            <TextBlock Text="{Binding StringFormat=Управление АЗС № {0}, Path=Id}" FontSize="25"/>
+            <TextBlock Text="{Binding StringFormat=Управление АЗС № {0}, Path=Id, FallbackValue=Добавление новой АЗС, Mode=TwoWay}" FontSize="25"/>
 
             <TextBox x:Name="StationAddress" Text="{Binding Address}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1">
-            <DataGrid x:Name="FuelDg" AutoGenerateColumns="False" ColumnWidth="*" ItemsSource="{Binding Fuels, Mode=TwoWay}">
+            <DataGrid x:Name="FuelDg" AutoGenerateColumns="False" ColumnWidth="*" CanUserAddRows="False" CanUserDeleteRows="False"
+                      ItemsSource="{Binding Fuels, Mode=TwoWay}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Название" Binding="{Binding TypeName}"/>
                     <DataGridTextColumn Header="Цена (p)" Binding="{Binding Price}"/>

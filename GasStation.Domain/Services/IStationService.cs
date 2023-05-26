@@ -13,7 +13,7 @@ namespace GasStation.Domain.Services
 
         public Task CreateStation(CreateGasStationDTO model);
         
-        public Task UpdateStation(CreateGasStationDTO model);
+        public Task UpdateStation(EditGasStationDTO model);
 
         /// <summary>
         /// Возвращает информацию, хранимую в базе о данной АЗС

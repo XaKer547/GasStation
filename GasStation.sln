@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GasStation.Application", "G
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GasStation.Tests", "GasStation.Tests\GasStation.Tests.csproj", "{8D660876-8B63-47A2-8D7F-065D6195293C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GasStation.CFS", "GasStation.CFS\GasStation.CFS.csproj", "{8A1238D8-CFC2-4D8B-BECD-A44839985CB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GasStation.CFS", "GasStation.CFS\GasStation.CFS.csproj", "{8A1238D8-CFC2-4D8B-BECD-A44839985CB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GasStation.Camera", "GasStation.Camera\GasStation.Camera.csproj", "{240A9BFE-7BAD-4D22-96A3-485131FE68E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{8A1238D8-CFC2-4D8B-BECD-A44839985CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A1238D8-CFC2-4D8B-BECD-A44839985CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A1238D8-CFC2-4D8B-BECD-A44839985CB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{240A9BFE-7BAD-4D22-96A3-485131FE68E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{240A9BFE-7BAD-4D22-96A3-485131FE68E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{240A9BFE-7BAD-4D22-96A3-485131FE68E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{240A9BFE-7BAD-4D22-96A3-485131FE68E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
