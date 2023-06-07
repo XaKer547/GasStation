@@ -1,5 +1,10 @@
 ﻿using GasStation.Application.Services;
+using GasStation.Domain;
+using GasStation.Domain.Models.DTOs.FuelDTO;
 using GasStation.Domain.Models.DTOs.GasStationDTO;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Windows;
 
 namespace GasStation.CFS
@@ -16,8 +21,6 @@ namespace GasStation.CFS
 
         private async void GetStation_Click(object sender, RoutedEventArgs e)
         {
-            HttpsService service = new();
-
             if (!int.TryParse(StationIdTxb.Text, out var id))
             {
                 return;
@@ -25,31 +28,39 @@ namespace GasStation.CFS
 
             if (id < 0 || id > 100)
             {
-                MessageBox.Show("");
+                MessageBox.Show("id не может быть меньше 1 или больше 99");
                 return;
             }
 
-            var stationAddress = await service.GetStationInfo(id);
-
-            if (stationAddress is null)
+            var client = new HttpClient(new HttpClientHandler() { UseProxy = false })
             {
+                BaseAddress = new(Routes.API_URL)
+            };
+
+            var response = await client.GetAsync($"getStationInfo?id={id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var address = await response.Content.ReadAsStringAsync();
+
+                response = await client.GetAsync($"getFuelInfo?stationId={id}");
+
+                new StationWindow(new EditGasStationDTO
+                {
+                    Id = id,
+                    Address = address,
+                    Fuels = await response.Content.ReadFromJsonAsync<FuelDTO[]>(),
+                }).Show();
+            }
+            else
+            {
+                response = await client.GetAsync("fuels");
+
                 new StationWindow(new CreateGasStationDTO()
                 {
-                    Fuels = await service.GetFuels()
-                }).ShowDialog();
-
-                Hide();
-                return;
+                    Fuels = await response.Content.ReadFromJsonAsync<FuelDTO[]>()
+                }).Show();
             }
-
-            new StationWindow(new EditGasStationDTO
-            {
-                Id = id,
-
-                Address = stationAddress,
-
-                Fuels = await service.GetFuelInfo(id),
-            }).Show();
 
             Hide();
         }
